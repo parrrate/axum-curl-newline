@@ -67,6 +67,7 @@ dependencies = [
  "axum",
  "axum-extra",
  "futures-util",
+ "tower",
 ]
 
 [[package]]

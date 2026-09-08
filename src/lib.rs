@@ -1,13 +1,16 @@
+use std::convert::Infallible;
+
 use axum::{
     body::{Body, Bytes},
     extract::Request,
-    middleware::Next,
-    response::Response,
+    middleware::{self, Next},
+    response::{IntoResponse, Response},
 };
 use axum_extra::{TypedHeader, headers::UserAgent, typed_header::TypedHeaderRejection};
 use futures_util::StreamExt;
+use tower::{Layer, Service};
 
-pub async fn curl_newline(
+async fn add_newline(
     user_agent: Result<TypedHeader<UserAgent>, TypedHeaderRejection>,
     request: Request,
     next: Next,
@@ -35,4 +38,25 @@ pub async fn curl_newline(
             )));
     }
     response
+}
+
+pub async fn curl_newline<
+    I: 'static
+        + Send
+        + Sync
+        + Clone
+        + Service<Request, Response: IntoResponse, Error = Infallible, Future: 'static + Send>,
+>() -> impl 'static
++ Send
++ Sync
++ Clone
++ Layer<
+    I,
+    Service: 'static
+                 + Send
+                 + Sync
+                 + Clone
+                 + Service<Request, Response = Response, Error = Infallible, Future: 'static + Send>,
+> {
+    middleware::from_fn(add_newline)
 }

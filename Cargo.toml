@@ -7,3 +7,4 @@ edition = "2024"
 axum = "0.8.9"
 axum-extra = { version = "0.12.6", features = ["typed-header"] }
 futures-util = { version = "0.3.34", default-features = false }
+tower = "0.5.3"
