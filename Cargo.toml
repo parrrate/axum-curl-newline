@@ -1,0 +1,9 @@
+[package]
+name = "axum-curl-newline"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = "0.8.9"
+axum-extra = { version = "0.12.6", features = ["typed-header"] }
+futures-util = { version = "0.3.34", default-features = false }
