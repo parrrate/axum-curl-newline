@@ -40,7 +40,7 @@ async fn add_newline(
     response
 }
 
-pub async fn curl_newline<
+pub fn curl_newline<
     I: 'static
         + Send
         + Sync
